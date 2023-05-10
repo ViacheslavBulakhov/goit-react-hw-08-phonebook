@@ -1,21 +1,21 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 
-import { ContactElement } from "./contacts.styled";
-import { selectContacts, selectFilter, selectIsLoading } from "redux/selectors";
-import { deleteContact } from "redux/operation";
+import { ContactElement } from './contacts.styled';
+import { selectContacts, selectFilter, selectIsLoading } from 'redux/selectors';
+import { deleteContact } from 'redux/operation';
 
-import HashLoader from "react-spinners/HashLoader";
-import { useState } from "react";
+import HashLoader from 'react-spinners/HashLoader';
+import { useState } from 'react';
+import authSelectors from 'redux/auth/auth-selectors';
 
 export function ContactList() {
-
   const dispath = useDispatch();
-  
+
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
 
   const isLoading = useSelector(selectIsLoading);
-  const [btnLoad, setBtnLoad] = useState("");
+  const [btnLoad, setBtnLoad] = useState('');
 
   const getFilteredContacts = contacts.filter(({ name }) =>
     name.toLowerCase().includes(filter.toLowerCase())
@@ -29,20 +29,20 @@ export function ContactList() {
   return (
     <>
       <ul>
-        {getFilteredContacts.map((contact) => (
+        {getFilteredContacts.map(contact => (
           <ContactElement key={contact.id}>
             <span>{contact.name}: </span>
-            <span>{contact.phone} </span>
+            <span>{contact.number} </span>
             <button
               style={{
                 width: 55,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
               type="button"
               name={contact.id}
-              onClick={(e) => onDeleteContact(contact.id, e)}
+              onClick={e => onDeleteContact(contact.id, e)}
             >
               {isLoading && btnLoad === contact.id ? (
                 <HashLoader
@@ -53,7 +53,7 @@ export function ContactList() {
                   data-testid="loader"
                 />
               ) : (
-                "Delete"
+                'Delete'
               )}
             </button>
           </ContactElement>

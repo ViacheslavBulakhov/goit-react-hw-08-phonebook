@@ -1,35 +1,32 @@
-import { useSelector, useDispatch } from "react-redux";
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import LoginForm from 'pages/LoginPage';
+import RegistrationForm from 'pages/RegistrationPage';
+import SharedLayout from 'components/SharedLayout/SharedLayout';
+import ErrorPage from 'pages/error-page';
+import { ContactsPage } from 'pages/ContactsPage';
 
-import { ContactForm } from "./ContactForm/contactForm";
-import { ContactList } from "./Contacts/ContactList";
-import { Filter } from "./Filter/filter";
-import { selectContacts } from "redux/selectors";
-import { useEffect } from "react";
-import { fetchContacts } from "redux/operation";
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <SharedLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'login',
+        element: <LoginForm />,
+      },
+      {
+        path: 'registration',
+        element: <RegistrationForm />,
+      },
+      {
+        path: 'contacts',
+        element: <ContactsPage />,
+      },
+    ],
+  },
+]);
 
 export function App() {
-  const contacts = useSelector(selectContacts);
-  const dispath = useDispatch();
-
-  useEffect(() => {
-    dispath(fetchContacts());
-  }, [dispath]);
-
-  return (
-    <div>
-      <h1>PhoneBook</h1>
-      <ContactForm />
-
-      <h2>Contacts</h2>
-
-      {contacts.length > 0 ? (
-        <>
-          <Filter />
-          <ContactList />
-        </>
-      ) : (
-        <p>You have no contacts on phonebook yet</p>
-      )}
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }

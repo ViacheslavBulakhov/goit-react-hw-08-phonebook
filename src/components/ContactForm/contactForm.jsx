@@ -1,11 +1,11 @@
-import { Formik, Field } from "formik";
-import * as Yup from "yup";
+import { Formik, Field } from 'formik';
+import * as Yup from 'yup';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
-import { RegisterForm, Label, Error } from "./contactFrom.styled";
-import { selectContacts, selectIsLoading } from "redux/selectors";
-import { postContact } from "redux/operation";
+import { RegisterForm, Label, Error } from './contactFrom.styled';
+import { selectContacts, selectIsLoading } from 'redux/selectors';
+import { postContact } from 'redux/operation';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -15,17 +15,17 @@ const validationSchema = Yup.object({
     )
     .required(),
 
-  phone: Yup.string()
+  number: Yup.string()
     .matches(
       /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/,
-      "Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+      'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +'
     )
     .required(),
 });
 
 const initialValues = {
-  name: "",
-  phone: "",
+  name: '',
+  number: '',
 };
 
 export function ContactForm() {
@@ -34,7 +34,7 @@ export function ContactForm() {
 
   const dispath = useDispatch();
 
-  const addContact = (contact) => {
+  const addContact = contact => {
     !checkOfValidContact(contact)
       ? dispath(postContact(contact))
       : alert(`${contact.name} is olready in contacts.`);
@@ -45,9 +45,9 @@ export function ContactForm() {
     resetForm();
   };
 
-  const checkOfValidContact = (value) =>
+  const checkOfValidContact = value =>
     contacts.find(
-      (contact) => contact.name.toLowerCase() === value.name.toLowerCase()
+      contact => contact.name.toLowerCase() === value.name.toLowerCase()
     );
 
   return (
@@ -62,16 +62,16 @@ export function ContactForm() {
         <Error name="name" component="span" />
 
         <Label htmlFor="name">Number</Label>
-        <Field type="tel" name="phone" />
+        <Field type="tel" name="number" />
         <Error name="phone" component="span" />
 
         <button
           type="submit"
-          disabled={isLoading}
+          // disabled={isLoading}
           style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           Add contact

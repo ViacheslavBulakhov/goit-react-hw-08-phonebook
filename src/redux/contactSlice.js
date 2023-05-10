@@ -1,18 +1,18 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { fetchContacts, deleteContact, postContact } from "./operation";
+import { fetchContacts, deleteContact, postContact } from './operation';
 
 export const contactsSlice = createSlice({
-  name: "contacts",
+  name: 'contacts',
   initialState: {
     items: [],
     isLoading: false,
     error: null,
   },
 
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     //fetch all
-    builder.addCase(fetchContacts.pending, (state) => {
+    builder.addCase(fetchContacts.pending, state => {
       state.isLoading = true;
     });
 
@@ -27,12 +27,12 @@ export const contactsSlice = createSlice({
     });
 
     //remove contact
-    builder.addCase(deleteContact.pending, (state) => {
+    builder.addCase(deleteContact.pending, state => {
       state.isLoading = true;
     });
 
     builder.addCase(deleteContact.fulfilled, (state, { payload }) => {
-      state.items = state.items.filter((contact) => contact.id !== payload);
+      state.items = state.items.filter(contact => contact.id !== payload);
       state.isLoading = false;
       state.error = null;
     });
@@ -42,7 +42,7 @@ export const contactsSlice = createSlice({
     });
 
     //add contact
-    builder.addCase(postContact.pending, (state) => {
+    builder.addCase(postContact.pending, state => {
       state.isLoading = true;
     });
 
