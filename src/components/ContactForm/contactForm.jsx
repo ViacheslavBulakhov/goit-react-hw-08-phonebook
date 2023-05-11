@@ -4,7 +4,7 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { RegisterForm, Label, Error } from './contactFrom.styled';
-import { selectContacts, selectIsLoading } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { postContact } from 'redux/operation';
 
 const validationSchema = Yup.object({
@@ -22,7 +22,12 @@ const validationSchema = Yup.object({
     )
     .required(),
 });
-
+const mainWrapStyles = {
+  display: ' flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+};
 const initialValues = {
   name: '',
   number: '',
@@ -30,7 +35,6 @@ const initialValues = {
 
 export function ContactForm() {
   const contacts = useSelector(selectContacts);
-  const isLoading = useSelector(selectIsLoading);
 
   const dispath = useDispatch();
 
@@ -56,7 +60,7 @@ export function ContactForm() {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      <RegisterForm>
+      <RegisterForm style={mainWrapStyles}>
         <Label htmlFor="name">Name</Label>
         <Field id="name" type="text" name="name" />
         <Error name="name" component="span" />
@@ -67,11 +71,11 @@ export function ContactForm() {
 
         <button
           type="submit"
-          // disabled={isLoading}
           style={{
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            marginTop: 10,
           }}
         >
           Add contact

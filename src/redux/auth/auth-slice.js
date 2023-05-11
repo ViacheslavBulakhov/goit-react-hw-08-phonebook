@@ -1,6 +1,6 @@
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { logIn, registration } from './auth-operations';
+import { logIn, registration, logOut } from './auth-operations';
 
 const { createSlice } = require('@reduxjs/toolkit');
 
@@ -45,23 +45,23 @@ const authSlice = createSlice({
     });
 
     // LOGOUT
-    // builder.addCase(registration.pending, state => {
-    //   state.isLoggedIn = true;
-    // });
+    builder.addCase(logOut.pending, state => {});
 
-    // builder.addCase(registration.fulfilled, state => {
-    //   state.isLoggedIn = true;
-    // });
+    builder.addCase(logOut.fulfilled, state => {
+      state.token = '';
+      state.user = { name: null, email: null };
+    });
 
-    // builder.addCase(registration.rejected, state => {
-    //   state.isLoggedIn = true;
-    // });
+    builder.addCase(logOut.rejected, state => {
+      state = initialState;
+    });
   },
 });
+
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['token'],
+  whitelist: ['token', 'user'],
 };
 
 export const authReducer = persistReducer(persistConfig, authSlice.reducer);

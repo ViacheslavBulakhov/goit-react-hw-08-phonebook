@@ -1,17 +1,22 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Suspense } from 'react';
-import ButtonAppBar from 'pages/UserMenu';
+import HeaderAppBar from 'pages/AppBar/HeaderAppBar';
 
-const SharedLayout = () => {
+const SharedLayout = ({ children }) => {
+  const location = useLocation();
   return (
     <>
       <header>
-        <ButtonAppBar />
+        <HeaderAppBar />
       </header>
       <main>
-        <Suspense fallback={<p>Hello</p>}>
-          <Outlet />
-        </Suspense>
+        {location.pathname === '/' ? (
+          children
+        ) : (
+          <Suspense fallback={<p>Hello</p>}>
+            <Outlet />
+          </Suspense>
+        )}
       </main>
     </>
   );

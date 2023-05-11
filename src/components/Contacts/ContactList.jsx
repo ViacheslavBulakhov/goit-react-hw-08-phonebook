@@ -6,7 +6,6 @@ import { deleteContact } from 'redux/operation';
 
 import HashLoader from 'react-spinners/HashLoader';
 import { useState } from 'react';
-import authSelectors from 'redux/auth/auth-selectors';
 
 export function ContactList() {
   const dispath = useDispatch();

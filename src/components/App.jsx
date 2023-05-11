@@ -4,29 +4,50 @@ import RegistrationForm from 'pages/RegistrationPage';
 import SharedLayout from 'components/SharedLayout/SharedLayout';
 import ErrorPage from 'pages/error-page';
 import { ContactsPage } from 'pages/ContactsPage';
+import PrivateRoute from './Routes/PrivateRoute';
+import Route from './Routes/route';
+import HomePage from 'pages/HomePage';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <SharedLayout />,
+    element: (
+      <SharedLayout>
+        <HomePage />
+      </SharedLayout>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
         path: 'login',
-        element: <LoginForm />,
+        element: (
+          <PrivateRoute>
+            <LoginForm />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'registration',
-        element: <RegistrationForm />,
+        element: (
+          <PrivateRoute>
+            <RegistrationForm />
+          </PrivateRoute>
+        ),
       },
       {
         path: 'contacts',
-        element: <ContactsPage />,
+        element: (
+          <Route>
+            <ContactsPage />
+          </Route>
+        ),
       },
     ],
   },
 ]);
 
 export function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <RouterProvider router={router} basename="goit-react-hw-08-phonebook" />
+  );
 }

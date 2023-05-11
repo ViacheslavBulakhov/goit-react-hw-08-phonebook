@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { registration } from 'redux/auth/auth-operations';
 
 const useStyles = makeStyles(theme => ({
@@ -43,6 +43,7 @@ function RegistrationForm() {
   return (
     <>
       <form className={classes.form} onSubmit={handleSubmit}>
+        <h2>Registration</h2>
         <TextField
           className={classes.input}
           label="Username"

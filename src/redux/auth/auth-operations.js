@@ -35,6 +35,16 @@ export const logIn = createAsyncThunk('auth/logIn', async credentials => {
   }
 });
 
+export const logOut = createAsyncThunk('auth/logOut', async credentials => {
+  try {
+    const { data } = await axios.post('/users/logout');
+    token.unset();
+
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 // aDmisn2762
 // slassssd8@gddmail.com
 // 12345678
