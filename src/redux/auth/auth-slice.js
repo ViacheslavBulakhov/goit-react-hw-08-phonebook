@@ -1,6 +1,7 @@
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { logIn, registration, logOut } from './auth-operations';
+// import { logIn, registration, logOut } from './auth-operations';
+import { logIn, logOut } from './auth-operations';
 import {
   handlePending,
   handleRejected,
