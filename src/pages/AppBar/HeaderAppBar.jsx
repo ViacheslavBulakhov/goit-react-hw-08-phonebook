@@ -1,31 +1,19 @@
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
 import { NavLink } from 'react-router-dom';
 
 import LoggedNav from './LoggedNav';
 
 export default function HeaderAppBar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <NavLink
-              to={`/`}
-              style={{
-                color: 'white',
-                textDecoration: 'none',
-              }}
-            >
-              PhoneBook
-            </NavLink>
-          </Typography>
-
-          {<LoggedNav />}
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <div>
+      <NavLink
+        to={`/`}
+        style={{
+          textDecoration: 'none',
+        }}
+      >
+        PhoneBook
+      </NavLink>
+      <LoggedNav />
+    </div>
   );
 }

@@ -1,5 +1,4 @@
 import { logOut } from 'redux/auth/auth-operations';
-import Button from '@mui/material/Button';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,7 +16,7 @@ export default function LoggedNav() {
           color: 'white',
         }}
       >
-        <Button color="inherit">Contacts</Button>
+        <button color="inherit">Contacts</button>
       </NavLink>
 
       <span>{name}</span>
@@ -28,10 +27,10 @@ export default function LoggedNav() {
           color: 'white',
         }}
       >
-        <Button onClick={() => dispath(logOut())} color="inherit">
+        <button onClick={() => dispath(logOut())} color="inherit">
           {' '}
           LogOut{' '}
-        </Button>
+        </button>
       </NavLink>
     </>
   ) : (
@@ -42,7 +41,7 @@ export default function LoggedNav() {
           color: 'white',
         }}
       >
-        <Button color="inherit">Registration</Button>
+        <button color="inherit">Registration</button>
       </NavLink>
 
       <NavLink
@@ -51,7 +50,7 @@ export default function LoggedNav() {
           color: 'white',
         }}
       >
-        <Button color="inherit">Login</Button>
+        <button color="inherit">Login</button>
       </NavLink>
     </>
   );

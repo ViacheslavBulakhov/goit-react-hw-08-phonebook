@@ -7,12 +7,14 @@ import { ContactList } from 'components/Contacts/ContactList';
 import { Filter } from 'components/Filter/filter';
 import authSelectors from 'redux/auth/auth-selectors';
 import { token } from 'redux/auth/auth-operations';
+
 const mainWrapStyles = {
   display: ' flex',
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
 };
+
 export const ContactsPage = () => {
   const contacts = useSelector(selectContacts);
   const isLoggedIn = useSelector(authSelectors.selectToken);

@@ -1,8 +1,14 @@
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { logIn, registration, logOut } from './auth-operations';
+import {
+  handlePending,
+  handleRejected,
+  handlefulfilled,
+  getActions,
+} from 'redux/auth/auth-Utils';
 
-const { createSlice } = require('@reduxjs/toolkit');
+const { createSlice, isAnyOf } = require('@reduxjs/toolkit');
 
 const initialState = {
   user: { name: null, email: null },
@@ -16,45 +22,26 @@ const authSlice = createSlice({
   initialState,
   extraReducers: builder => {
     // REGISTRATION
-    builder.addCase(registration.pending, state => {
-      state.isLoader = true;
-    });
-
-    builder.addCase(registration.fulfilled, state => {
-      state.isLoader = false;
-    });
-
-    builder.addCase(registration.rejected, state => {
-      state.isLoader = false;
-    });
 
     // LOGIN
-    builder.addCase(logIn.pending, state => {
-      state.isLoggedIn = true;
-    });
-
-    builder.addCase(logIn.fulfilled, (state, { payload: { token, user } }) => {
-      state.isLoggedIn = true;
-      state.token = token;
-      state.user.name = user.name;
-      state.user.email = user.email;
-    });
-
-    builder.addCase(logIn.rejected, state => {
-      state.isLoggedIn = true;
-    });
-
-    // LOGOUT
-    builder.addCase(logOut.pending, state => {});
-
-    builder.addCase(logOut.fulfilled, state => {
-      state.token = '';
-      state.user = { name: null, email: null };
-    });
-
-    builder.addCase(logOut.rejected, state => {
-      state = initialState;
-    });
+    builder
+      .addCase(logIn.fulfilled, (state, { payload: { token, user } }) => {
+        state.isLoggedIn = true;
+        state.token = token;
+        state.user.name = user.name;
+        state.user.email = user.email;
+      })
+      .addCase(logIn.rejected, state => {
+        state.isLoggedIn = false;
+      })
+      // LOGOUT
+      .addCase(logOut.fulfilled, state => {
+        state.token = '';
+        state.user = { name: null, email: null };
+      })
+      .addMatcher(isAnyOf(...getActions('pending')), handlePending)
+      .addMatcher(isAnyOf(...getActions('fulfilled')), handlefulfilled)
+      .addMatcher(isAnyOf(...getActions('rejected')), handleRejected);
   },
 });
 
