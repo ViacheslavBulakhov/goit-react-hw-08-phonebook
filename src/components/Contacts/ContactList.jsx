@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { useState } from 'react';
 import { ContactElement } from './contacts.styled';
 import { selectContacts, selectFilter, selectIsLoading } from 'redux/selectors';
 import { deleteContact } from 'redux/operation';
 import HashLoader from 'react-spinners/HashLoader';
-import { useEffect, useState } from 'react';
 import { UpdateContactForm } from 'components/ContactForm/updateContactForm';
 import {
   Modal,

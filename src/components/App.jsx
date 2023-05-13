@@ -11,44 +11,49 @@ const RegistrationPage = lazy(() => import('pages/RegistrationPage'));
 const ContactsPage = lazy(() => import('pages/ContactsPage'));
 const ErrorPage = lazy(() => import('pages/error-page'));
 
-const router = createBrowserRouter([
-  {
-    path: '/',
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
 
-    element: <SharedLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: '/',
-        element: <HomePage />,
-      },
-      {
-        path: 'login',
-        element: (
-          <PrivateRoute>
-            <LoginPage />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: 'registration',
-        element: (
-          <PrivateRoute>
-            <RegistrationPage />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: 'contacts',
-        element: (
-          <Route>
-            <ContactsPage />
-          </Route>
-        ),
-      },
-    ],
-  },
-]);
+      element: <SharedLayout />,
+      errorElement: <ErrorPage />,
+      children: [
+        {
+          path: '/',
+          element: <HomePage />,
+        },
+        {
+          path: 'login',
+          element: (
+            <PrivateRoute>
+              <LoginPage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: 'registration',
+          element: (
+            <PrivateRoute>
+              <RegistrationPage />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: 'contacts',
+          element: (
+            <Route>
+              <ContactsPage />
+            </Route>
+          ),
+        },
+      ],
+    },
+  ],
+  {
+    basename: 'goit-react-hw-08-phonebook',
+  }
+);
 
 export function App() {
   return <RouterProvider router={router} />;
