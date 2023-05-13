@@ -1,8 +1,10 @@
 import { logOut } from 'redux/auth/auth-operations';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Button, Tag } from '@chakra-ui/react';
 
 import authSelectors from 'redux/auth/auth-selectors';
+
 export default function LoggedNav() {
   const isLoggedIn = useSelector(authSelectors.selectToken);
   const name = useSelector(state => state.auth.user.name);
@@ -10,47 +12,34 @@ export default function LoggedNav() {
 
   return isLoggedIn ? (
     <>
-      <NavLink
-        to={`contacts`}
-        style={{
-          color: 'white',
-        }}
-      >
-        <button color="inherit">Contacts</button>
+      <Tag size={'lg'} key={'lg'} variant="solid" colorScheme="teal" mr="10px">
+        User: {name}
+      </Tag>
+
+      <NavLink to={`contacts`}>
+        <Button colorScheme="teal" mr={4}>
+          Contacts
+        </Button>
       </NavLink>
 
-      <span>{name}</span>
-
-      <NavLink
-        to={`/`}
-        style={{
-          color: 'white',
-        }}
-      >
-        <button onClick={() => dispath(logOut())} color="inherit">
-          {' '}
-          LogOut{' '}
-        </button>
+      <NavLink to={`/`}>
+        <Button colorScheme="teal" mr={4} onClick={() => dispath(logOut())}>
+          LogOut
+        </Button>
       </NavLink>
     </>
   ) : (
     <>
-      <NavLink
-        to={`registration`}
-        style={{
-          color: 'white',
-        }}
-      >
-        <button color="inherit">Registration</button>
+      <NavLink to={`registration`}>
+        <Button colorScheme="teal" mr={4}>
+          Registration
+        </Button>
       </NavLink>
 
-      <NavLink
-        to={`login`}
-        style={{
-          color: 'white',
-        }}
-      >
-        <button color="inherit">Login</button>
+      <NavLink to={`login`}>
+        <Button colorScheme="teal" mr={4}>
+          Login
+        </Button>
       </NavLink>
     </>
   );

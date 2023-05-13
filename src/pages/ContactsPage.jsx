@@ -7,15 +7,16 @@ import { ContactList } from 'components/Contacts/ContactList';
 import { Filter } from 'components/Filter/filter';
 import authSelectors from 'redux/auth/auth-selectors';
 import { token } from 'redux/auth/auth-operations';
+import {
+  Button,
+  Modal,
+  ModalContent,
+  ModalOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
+import { AddIcon } from '@chakra-ui/icons';
 
-const mainWrapStyles = {
-  display: ' flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-};
-
-export const ContactsPage = () => {
+const ContactsPage = () => {
   const contacts = useSelector(selectContacts);
   const isLoggedIn = useSelector(authSelectors.selectToken);
   const dispath = useDispatch();
@@ -27,20 +28,35 @@ export const ContactsPage = () => {
     isLoggedIn && dispath(fetchContacts());
   }, [dispath, isLoggedIn]);
 
-  return (
-    <div style={mainWrapStyles}>
-      <h1>PhoneBook</h1>
-      <ContactForm />
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-      <h2>Contacts</h2>
-      {contacts.length > 0 ? (
-        <>
-          <Filter />
-          <ContactList />
-        </>
-      ) : (
-        <p>You have no contacts on phonebook yet</p>
-      )}
+  return (
+    <div style={{ padding: 10, display: 'flex' }}>
+      <div
+        style={{
+          width: 500,
+        }}
+      >
+        {contacts.length > 0 ? (
+          <>
+            <Filter />
+            <ContactList />
+          </>
+        ) : (
+          <p>You have no contacts on phonebook yet</p>
+        )}
+      </div>
+      <Button onClick={onOpen}>
+        <AddIcon />
+      </Button>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ContactForm onClose={onClose} />
+        </ModalContent>
+      </Modal>
     </div>
   );
 };
+export default ContactsPage;

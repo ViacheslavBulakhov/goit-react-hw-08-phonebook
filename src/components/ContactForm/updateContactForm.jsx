@@ -17,7 +17,7 @@ import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { selectContacts } from 'redux/selectors';
-import { postContact } from 'redux/operation';
+import { updateContact } from 'redux/operation';
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -35,24 +35,19 @@ const validationSchema = Yup.object({
     .required(),
 });
 
-const initialValues = {
-  name: '',
-  number: '',
-};
-
-export function ContactForm({ onClose }) {
+export function UpdateContactForm({ onClose, currentContact }) {
   const contacts = useSelector(selectContacts);
 
   const dispath = useDispatch();
 
-  const addContact = contact => {
+  const refreshContact = contact => {
     !checkOfValidContact(contact)
-      ? dispath(postContact(contact))
+      ? dispath(updateContact(contact))
       : alert(`${contact.name} is olready in contacts.`);
   };
 
   const handleSubmit = (value, { resetForm }) => {
-    addContact({ ...value });
+    refreshContact({ ...value });
     onClose();
     resetForm();
   };
@@ -64,11 +59,11 @@ export function ContactForm({ onClose }) {
 
   return (
     <>
-      <ModalHeader>Add New Contact</ModalHeader>
+      <ModalHeader>Update Contact</ModalHeader>
       <ModalCloseButton />
       <ModalBody pb={6}>
         <Formik
-          initialValues={initialValues}
+          initialValues={currentContact}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
@@ -98,7 +93,7 @@ export function ContactForm({ onClose }) {
                 </FormControl>
 
                 <Button type="submit" colorScheme="teal" width="full">
-                  Add contact
+                  Update contact
                 </Button>
               </VStack>
             </form>

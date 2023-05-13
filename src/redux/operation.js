@@ -13,12 +13,12 @@ export const fetchContacts = createAsyncThunk('contacts/fetchAll', async () => {
   }
 });
 
-export const deleteContact = createAsyncThunk(
-  'contacts/deleteContact',
-  async id => {
+export const updateContact = createAsyncThunk(
+  'contacts/updateContact',
+  async ({ id, name, number }) => {
     try {
-      await axios.delete(`/contacts/${id}`);
-      return id;
+      const { data } = await axios.patch(`/contacts/${id}`, { name, number });
+      return data;
     } catch (error) {
       return error;
     }
@@ -31,6 +31,18 @@ export const postContact = createAsyncThunk(
     try {
       const { data } = await axios.post('/contacts', contact);
       return data;
+    } catch (error) {
+      return error;
+    }
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async id => {
+    try {
+      await axios.delete(`/contacts/${id}`);
+      return id;
     } catch (error) {
       return error;
     }

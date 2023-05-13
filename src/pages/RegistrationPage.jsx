@@ -1,3 +1,14 @@
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Input,
+  VStack,
+} from '@chakra-ui/react';
+import { Field, Formik } from 'formik';
 import { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
@@ -9,7 +20,7 @@ const initialState = {
   password: '',
 };
 
-function RegistrationForm() {
+function RegistrationPage() {
   const [formData, setFormData] = useState(initialState);
   const dispath = useDispatch();
 
@@ -17,44 +28,68 @@ function RegistrationForm() {
     setFormData(prevFormData => ({ ...prevFormData, [name]: value.trim() }));
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = async () => {
     dispath(registration(formData));
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <h2>Registration</h2>
+    <Flex bg="gray.100" align="center" justify="center" h={'100vh'}>
+      <Box bg="white" p={6} rounded="md" w={64}>
+        <Formik initialValues={initialState} onSubmit={handleSubmit}>
+          {({ handleSubmit, errors, touched }) => (
+            <form onSubmit={handleSubmit}>
+              <VStack spacing={4} align="flex-start">
+                <FormControl isInvalid={!!errors.password && touched.password}>
+                  <FormLabel htmlFor="password">Name</FormLabel>
+                  <Field
+                    as={Input}
+                    id="name"
+                    name="name"
+                    type="text"
+                    variant="filled"
+                    value={formData.name}
+                    onChange={handleChange}
+                  />
+                  <FormErrorMessage>{errors.password}</FormErrorMessage>
+                </FormControl>
 
-        <input
-          label="Username"
-          name="name"
-          variant="outlined"
-          value={formData.name}
-          onChange={handleChange}
-        ></input>
-        <input
-          label="Email"
-          name="email"
-          variant="outlined"
-          value={formData.email}
-          onChange={handleChange}
-        ></input>
-        <input
-          label="Password"
-          name="password"
-          variant="outlined"
-          type="password"
-          value={formData.password}
-          onChange={handleChange}
-        ></input>
-        <button variant="contained" color="primary" type="submit">
-          Register
-        </button>
-      </form>
-    </>
+                <FormControl>
+                  <FormLabel htmlFor="email">Email Address</FormLabel>
+                  <Field
+                    as={Input}
+                    id="email"
+                    name="email"
+                    type="email"
+                    variant="filled"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+
+                <FormControl isInvalid={!!errors.password && touched.password}>
+                  <FormLabel htmlFor="password">Password</FormLabel>
+                  <Field
+                    as={Input}
+                    id="password"
+                    name="password"
+                    type="password"
+                    variant="filled"
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
+                  <FormErrorMessage>{errors.password}</FormErrorMessage>
+                </FormControl>
+
+                <Button type="submit" colorScheme="purple" width="full">
+                  Registration
+                </Button>
+              </VStack>
+            </form>
+          )}
+        </Formik>
+      </Box>
+    </Flex>
   );
 }
 
-export default RegistrationForm;
+export default RegistrationPage;

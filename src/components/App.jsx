@@ -1,28 +1,32 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import LoginForm from 'pages/LoginPage';
-import RegistrationForm from 'pages/RegistrationPage';
+import { lazy } from 'react';
+
 import SharedLayout from 'components/SharedLayout/SharedLayout';
-import ErrorPage from 'pages/error-page';
-import { ContactsPage } from 'pages/ContactsPage';
 import PrivateRoute from './Routes/PrivateRoute';
 import Route from './Routes/route';
-import HomePage from 'pages/HomePage';
+
+const LoginPage = lazy(() => import('pages/LoginPage'));
+const HomePage = lazy(() => import('pages/HomePage'));
+const RegistrationPage = lazy(() => import('pages/RegistrationPage'));
+const ContactsPage = lazy(() => import('pages/ContactsPage'));
+const ErrorPage = lazy(() => import('pages/error-page'));
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <SharedLayout>
-        <HomePage />
-      </SharedLayout>
-    ),
+
+    element: <SharedLayout />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: '/',
+        element: <HomePage />,
+      },
       {
         path: 'login',
         element: (
           <PrivateRoute>
-            <LoginForm />
+            <LoginPage />
           </PrivateRoute>
         ),
       },
@@ -30,7 +34,7 @@ const router = createBrowserRouter([
         path: 'registration',
         element: (
           <PrivateRoute>
-            <RegistrationForm />
+            <RegistrationPage />
           </PrivateRoute>
         ),
       },
@@ -47,7 +51,6 @@ const router = createBrowserRouter([
 ]);
 
 export function App() {
-  return (
-    <RouterProvider router={router} basename="goit-react-hw-08-phonebook" />
-  );
+  return <RouterProvider router={router} />;
 }
+//basename: 'goit-react-hw-08-phonebook',
