@@ -52,10 +52,15 @@ export function UpdateContactForm({ onClose, currentContact }) {
     resetForm();
   };
 
-  const checkOfValidContact = value =>
-    contacts.find(
-      contact => contact.name.toLowerCase() === value.name.toLowerCase()
-    );
+  const checkOfValidContact = value => {
+    return contacts.find(contact => {
+      if (contact.id === currentContact.id) {
+        return false;
+      } else {
+        return contact.name.toLowerCase() === value.name.toLowerCase();
+      }
+    });
+  };
 
   return (
     <>

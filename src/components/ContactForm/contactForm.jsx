@@ -18,7 +18,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectContacts } from 'redux/selectors';
 import { postContact } from 'redux/operation';
 
-
 const validationSchema = Yup.object({
   name: Yup.string()
     .matches(
@@ -116,22 +115,22 @@ export function ContactForm({ onClose }) {
 }
 
 /* <FormControl
-                    isInvalid={!!errors.password && touched.password}
-                  >
-                    <FormLabel htmlFor="number">Phone Number</FormLabel>
-                    <InputMask
-                      mask="+380-99-999-99-99"
-                      onChange={e => setNumber(e.target.value)}
-                    >
-                      {inputProps => (
-                        <Input
-                          id="number"
-                          placeholder="+380-__-___-__-__"
-                          type="tel"
-                          name="number"
-                          value={number}
-                          {...inputProps}
-                        />
-                      )}
-                    </InputMask>
-                  </FormControl> */
+    isInvalid={!!errors.password && touched.password}
+  >
+    <FormLabel htmlFor="number">Phone Number</FormLabel>
+    <InputMask
+      mask="+380-99-999-99-99"
+      onChange={e => setNumber(e.target.value)}
+    >
+      {inputProps => (
+        <Input
+          id="number"
+          placeholder="+380-__-___-__-__"
+          type="tel"
+          name="number"
+          value={number}
+          {...inputProps}
+        />
+      )}
+    </InputMask>
+  </FormControl> */
