@@ -1,5 +1,10 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  notifyCreacteNewContact,
+  notifyDeleteContact,
+  notifyUpdateContact,
+} from 'components/Toasters/Toasters';
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
 
@@ -18,6 +23,7 @@ export const updateContact = createAsyncThunk(
   async ({ id, name, number }) => {
     try {
       const { data } = await axios.patch(`/contacts/${id}`, { name, number });
+      notifyUpdateContact();
       return data;
     } catch (error) {
       return error;
@@ -30,6 +36,7 @@ export const postContact = createAsyncThunk(
   async contact => {
     try {
       const { data } = await axios.post('/contacts', contact);
+      notifyCreacteNewContact();
       return data;
     } catch (error) {
       return error;
@@ -42,6 +49,7 @@ export const deleteContact = createAsyncThunk(
   async id => {
     try {
       await axios.delete(`/contacts/${id}`);
+      notifyDeleteContact();
       return id;
     } catch (error) {
       return error;

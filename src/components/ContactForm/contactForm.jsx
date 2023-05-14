@@ -1,5 +1,4 @@
 import { Formik, Field } from 'formik';
-
 import {
   Button,
   FormControl,
@@ -18,6 +17,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { selectContacts } from 'redux/selectors';
 import { postContact } from 'redux/operation';
+
 
 const validationSchema = Yup.object({
   name: Yup.string()
@@ -72,39 +72,66 @@ export function ContactForm({ onClose }) {
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
-          {({ handleSubmit, errors, touched }) => (
-            <form onSubmit={handleSubmit}>
-              <VStack spacing={4} align="flex-start">
-                <FormControl>
-                  <FormLabel htmlFor="name">Name</FormLabel>
-                  <Field
-                    as={Input}
-                    id="name"
-                    type="text"
-                    name="name"
-                    placeholder="Name"
-                  />
-                </FormControl>
-                <FormControl isInvalid={!!errors.password && touched.password}>
-                  <FormLabel htmlFor="number">Number</FormLabel>
-                  <Field
-                    as={Input}
-                    id="number"
-                    name="number"
-                    type="tel"
-                    placeholder="Number"
-                  />
-                  <FormErrorMessage>{errors.password}</FormErrorMessage>
-                </FormControl>
+          {({ handleSubmit, errors, touched }) => {
+            return (
+              <form onSubmit={handleSubmit}>
+                <VStack spacing={4} align="flex-start">
+                  <FormControl>
+                    <FormLabel htmlFor="name">Name</FormLabel>
+                    <Field
+                      as={Input}
+                      id="name"
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                    />
+                  </FormControl>
 
-                <Button type="submit" colorScheme="teal" width="full">
-                  Add contact
-                </Button>
-              </VStack>
-            </form>
-          )}
+                  <FormControl
+                    isInvalid={!!errors.password && touched.password}
+                  >
+                    <FormLabel htmlFor="number">Number</FormLabel>
+
+                    <Field
+                      as={Input}
+                      id="number"
+                      name="number"
+                      type="tel"
+                      placeholder="Number"
+                    />
+                    <FormErrorMessage>{errors.password}</FormErrorMessage>
+                  </FormControl>
+
+                  <Button type="submit" colorScheme="teal" width="full">
+                    Add contact
+                  </Button>
+                </VStack>
+              </form>
+            );
+          }}
         </Formik>
       </ModalBody>
     </>
   );
 }
+
+/* <FormControl
+                    isInvalid={!!errors.password && touched.password}
+                  >
+                    <FormLabel htmlFor="number">Phone Number</FormLabel>
+                    <InputMask
+                      mask="+380-99-999-99-99"
+                      onChange={e => setNumber(e.target.value)}
+                    >
+                      {inputProps => (
+                        <Input
+                          id="number"
+                          placeholder="+380-__-___-__-__"
+                          type="tel"
+                          name="number"
+                          value={number}
+                          {...inputProps}
+                        />
+                      )}
+                    </InputMask>
+                  </FormControl> */

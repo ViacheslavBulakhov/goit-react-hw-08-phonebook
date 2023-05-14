@@ -14,5 +14,6 @@ export const handlefulfilled = state => {
 
 export const handleRejected = (state, { payload }) => {
   state.isLoading = false;
+  console.log(payload);
   state.error = payload;
 };

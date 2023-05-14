@@ -59,6 +59,7 @@ export function ContactList() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                marginLeft: 10,
               }}
               type="button"
               name={contact.id}

@@ -1,4 +1,9 @@
 import axios from 'axios';
+import {
+  notifyErrorLogin,
+  notifyErrorRegistration,
+  notifyFulfilledLogin,
+} from 'components/Toasters/Toasters';
 const { createAsyncThunk } = require('@reduxjs/toolkit');
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
@@ -16,10 +21,11 @@ export const registration = createAsyncThunk(
   async credentials => {
     try {
       const { data } = await axios.post('/users/signup', credentials);
-      console.log(data);
+
       token.set(data.token);
       return data;
     } catch (error) {
+      notifyErrorRegistration();
       console.log(error);
     }
   }
@@ -29,10 +35,11 @@ export const logIn = createAsyncThunk('auth/logIn', async credentials => {
   try {
     const { data } = await axios.post('/users/login', credentials);
     token.set(data.token);
-
+    notifyFulfilledLogin();
     return data;
   } catch (error) {
-    console.log(error);
+    notifyErrorLogin();
+    return;
   }
 });
 
@@ -46,6 +53,8 @@ export const logOut = createAsyncThunk('auth/logOut', async credentials => {
     console.log(error);
   }
 });
+
+//зареєстрований акк
 // aDmisn2762
 // slassssd8@gddmail.com
 // 12345678

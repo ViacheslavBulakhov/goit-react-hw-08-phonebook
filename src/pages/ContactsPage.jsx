@@ -39,16 +39,27 @@ const ContactsPage = () => {
       >
         {contacts.length > 0 ? (
           <>
-            <Filter />
+            <Filter onOpen={onOpen} />
             <ContactList />
           </>
         ) : (
-          <p>You have no contacts on phonebook yet</p>
+          <>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+              }}
+            >
+              <span>AddContact</span>
+              <Button onClick={onOpen}>
+                <AddIcon />
+              </Button>
+            </div>
+            <p>You have no contacts on phonebook yet</p>
+          </>
         )}
       </div>
-      <Button onClick={onOpen}>
-        <AddIcon />
-      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
