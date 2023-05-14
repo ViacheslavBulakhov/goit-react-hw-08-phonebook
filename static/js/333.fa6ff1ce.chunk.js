@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_homework_template=self.webpackChunkreact_homework_template||[]).push([[333],{1333:function(e,r,n){n.r(r),n.d(r,{default:function(){return c}});var t=n(184);function c(){return(0,t.jsxs)("div",{id:"error-page",children:[(0,t.jsx)("h1",{children:"Oops!"}),(0,t.jsx)("p",{children:"Sorry, an unexpected error has occurred."})]})}}}]);
+//# sourceMappingURL=333.fa6ff1ce.chunk.js.map
