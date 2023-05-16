@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Formik, Field } from 'formik';
 import {
   Button,
@@ -113,6 +114,8 @@ export function ContactForm({ onClose }) {
     </>
   );
 }
+
+ContactForm.propTypes = { onClose: PropTypes.func.isRequired };
 
 /* <FormControl
     isInvalid={!!errors.password && touched.password}

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { AddIcon } from '@chakra-ui/icons';
 import { Button, FormLabel, Input } from '@chakra-ui/react';
 import { useDispatch } from 'react-redux';
@@ -46,3 +47,4 @@ export function Filter({ onOpen }) {
     </>
   );
 }
+Filter.propTypes = { onOpen: PropTypes.func.isRequired };

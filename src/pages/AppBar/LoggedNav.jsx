@@ -6,8 +6,8 @@ import { Button, Tag } from '@chakra-ui/react';
 import authSelectors from 'redux/auth/auth-selectors';
 
 export default function LoggedNav() {
-  const isLoggedIn = useSelector(authSelectors.selectToken);
-  const name = useSelector(state => state.auth.user.name);
+  const isLoggedIn = useSelector(authSelectors.selectIsLoggedIn);
+  const name = useSelector(authSelectors.selectUserName);
   const dispath = useDispatch();
 
   return isLoggedIn ? (

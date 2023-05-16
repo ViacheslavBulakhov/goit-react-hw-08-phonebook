@@ -1,11 +1,13 @@
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { logIn, logOut, registration } from './auth-operations';
+import { logIn, logOut, refreshUser, registration } from './auth-operations';
 import {
   handlePending,
   handleRejected,
   handlefulfilled,
   getActions,
+  userFulfilled,
+  getInitialState,
 } from 'redux/auth/auth-Utils';
 
 const { createSlice, isAnyOf } = require('@reduxjs/toolkit');
@@ -23,30 +25,31 @@ const authSlice = createSlice({
   extraReducers: builder => {
     builder
       // REGISTRATION
-      .addCase(
-        registration.fulfilled,
-        (state, { payload: { token, user } }) => {
-          state.isLoggedIn = true;
-          state.token = token;
-          state.user.name = user.name;
-          state.user.email = user.email;
-        }
-      )
-      // LOGIN
-      .addCase(logIn.fulfilled, (state, { payload: { token, user } }) => {
-        state.isLoggedIn = true;
-        state.token = token;
-        state.user.name = user.name;
-        state.user.email = user.email;
-      })
+      .addCase(registration.fulfilled, userFulfilled)
+
+      //LogIn
+      .addCase(logIn.fulfilled, userFulfilled)
       .addCase(logIn.rejected, state => {
         state.isLoggedIn = false;
       })
+
       // LOGOUT
-      .addCase(logOut.fulfilled, state => {
-        state.token = '';
-        state.user = { name: null, email: null };
+      .addCase(logOut.fulfilled, getInitialState)
+
+      //REFRESH USER
+      .addCase(refreshUser.pending, state => {
+        state.isRefreshing = true;
       })
+      .addCase(refreshUser.fulfilled, (state, { payload }) => {
+        state.isRefreshing = false;
+        state.user = payload;
+        state.isLoggedIn = true;
+      })
+      .addCase(refreshUser.rejected, state => {
+        state.isRefreshing = false;
+        state.isLoggedIn = false;
+      })
+
       .addMatcher(isAnyOf(...getActions('pending')), handlePending)
       .addMatcher(isAnyOf(...getActions('fulfilled')), handlefulfilled)
       .addMatcher(isAnyOf(...getActions('rejected')), handleRejected);
@@ -56,7 +59,7 @@ const authSlice = createSlice({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['token', 'user'],
+  whitelist: ['token'],
 };
 
 export const authReducer = persistReducer(persistConfig, authSlice.reducer);

@@ -1,5 +1,5 @@
 import { Formik, Field } from 'formik';
-
+import PropTypes from 'prop-types';
 import {
   Button,
   FormControl,
@@ -108,3 +108,11 @@ export function UpdateContactForm({ onClose, currentContact }) {
     </>
   );
 }
+UpdateContactForm.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  currentContact: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }),
+};
